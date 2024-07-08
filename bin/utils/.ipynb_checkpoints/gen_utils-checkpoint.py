@@ -11,7 +11,7 @@ mi.set_variant('cuda_ad_rgb')
 
 def load_scene(room, agent):
     # file name
-    file = '/'.join(['../scenes', room, agent+'.xml'])
+    file = '/'.join(['../../scenes', room, agent+'.xml'])
     
     # load scene
     scene = mi.load_file(file)
