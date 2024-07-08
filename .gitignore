@@ -2,8 +2,12 @@
 agents/
 scenes/
 images/
+old/
 
 # Files
+.Rhistory
+.Rhistory
+*.ipynb
 *.csv
 *.out
 *.toml
