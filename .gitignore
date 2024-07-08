@@ -3,10 +3,11 @@ agents/
 scenes/
 images/
 old/
-
+__pycache_/
+_
 # Files
 .Rhistory
-.Rhistory
+.train_MAPnet.py.swo
 *.ipynb
 *.csv
 *.out
