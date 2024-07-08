@@ -1,0 +1,10 @@
+# Directories
+agents/
+scenes/
+images/
+
+# Files
+*.csv
+*.out
+*.toml
+*.pt
