@@ -12,5 +12,5 @@ conda activate generative
 # Creates training images
 ./baseline.sh A "[10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000]" 0.0001 75 45000 forward_graphics_engine
 
-# Trains baseline network
+# Trains baseline network (uncommment when previous step is finished)
 #./baseline.sh A "[10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000]" 0.0001 75 45000 inverse_MAP_network

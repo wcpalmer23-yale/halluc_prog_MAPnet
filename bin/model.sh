@@ -1,7 +1,7 @@
 #!/bin/bash
 # Model
 #   - runs with clean or distorted images and changes in expectation
-#   - example: ./model.sh full 0 4 "[10000, 10000, 10000, 10000, 10000, 10000]" noisy 1
+#   - example: ./model.sh A A1_NO00110_00 0 4 "[10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000]" noisy 1
 ################################################################################################################
 # Set directory
 proj_dir=/home/wcp27/project/halluc_prog_MAPnet
