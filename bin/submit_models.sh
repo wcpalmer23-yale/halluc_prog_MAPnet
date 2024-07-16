@@ -8,4 +8,4 @@
 #SBATCH --array=23-44
 module load miniconda Julia/1.9.3-linux-x86_64
 conda activate generative
-./run_models.sh C 0 2
+./run_models.sh C 4 4

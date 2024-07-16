@@ -8,8 +8,8 @@ bin/__pycache__/
 # Files
 bin/.Rhistory
 bin/.train_MAPnet.py.swo
-*.ipynb
 *.csv
 *.out
 *.toml
 *.pt
+*.ipynb
