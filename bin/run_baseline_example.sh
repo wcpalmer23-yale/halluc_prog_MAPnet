@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=Base_A
+#SBATCH --job-name=Base_D
 #SBATCH --partition=gpu
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=80G
@@ -10,7 +10,7 @@
 module load miniconda Julia/1.9.3-linux-x86_64
 conda activate generative
 # Creates training images
-./baseline.sh A "[10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000]" 0.0001 75 45000 forward_graphics_engine
+#./baseline.sh A "[10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000]" 0.0001 75 45000 forward_graphics_engine
 
 # Trains baseline network (uncommment when previous step is finished)
-#./baseline.sh A "[10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000]" 0.0001 75 45000 inverse_MAP_network
+./baseline.sh D "[10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000]" 0.0001 75 45000 inverse_MAP_network
