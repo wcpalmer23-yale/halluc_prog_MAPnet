@@ -31,7 +31,8 @@ for i, row in df_models.iterrows():
 
     ## lr.txt
     lr = open("/".join([lib_dir, row["model"], "lr.txt"]), "w")
-    lr.write("\n".join(["0.0001", "0.0001", "0.0001", "0.0001", "0.0001"]))
+    lr_lst = [str(row["lr"]) for i in range(5)]
+    lr.write("\n".join(lr_lst))
     lr.close()
 
     ## n_epoch.txt
