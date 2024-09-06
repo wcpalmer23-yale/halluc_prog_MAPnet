@@ -172,10 +172,10 @@
         - model specifications: `lib/model_specifications.csv`
             - sample of required information:
 
-        | model         | family | age   | expectation | distortion | dval | progression | confidence |
-        |---------------|--------|-------|-------------|------------|------|-------------|------------|
-        | A1_CL00050_00 | noconf | 10000 | 0           | clean      | 0.05 | 0           | 0          |
-        | A1_BL00200_00 | noconf | 10000 | 0           | blurred    | 0.20 | 0           | 0          |
+        | model         | family | age   | expectation | distortion | dval | progression | confidence | lr    |
+        |---------------|--------|-------|-------------|------------|------|-------------|------------|-------|
+        | A1_CL00050_00 | noconf | 10000 | 0           | clean      | 0.05 | 0           | 0          | 0.001 |
+        | A1_BL00200_00 | noconf | 10000 | 0           | blurred    | 0.20 | 0           | 0          | 0.001 |
     * output:
         - model confidence threshold over time: `lib/${model}/conf.txt`
         - model distortion value over time: `lib/${model}/dval.txt`
