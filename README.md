@@ -53,8 +53,9 @@
 3. `pip install mitsuba`
 4. `conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia`
 5. `conda install scikit-learn`
-6. `conda install pandas`
-7. `python -m pip install -U matplotlib`
+6. `conda install scikit-image`
+7. `conda install pandas`
+8. `python -m pip install -U matplotlib`
 * *Note*: There is a `environment.yaml` file.
 
 ## Main Scripts
