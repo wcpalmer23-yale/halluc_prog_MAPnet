@@ -5,7 +5,7 @@
 #SBATCH --mem=32G
 #SBATCH --gpus=1
 #SBATCH --time=2-00:00:00
-#SBATCH --array=26-40
+#SBATCH --array=65
 module load miniconda Julia/1.9.3-linux-x86_64
 conda activate generative
-./run_models.sh E 0 2
+./run_models.sh B 4 4

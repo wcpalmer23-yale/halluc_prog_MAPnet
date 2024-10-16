@@ -11,11 +11,11 @@ bin_dir = "/".join([proj_dir, "bin"])
 lib_dir = "/".join([proj_dir, "lib"])
 
 # Create param csv
-param = open("/".join([bin_dir, "model_params.csv"]), "w")
-param.close()
+#param = open("/".join([bin_dir, "model_params.csv"]), "w")
+#param.close()
 
 # Load models
-df_models = pd.read_csv("/".join([lib_dir, "model_specifications.csv"]))
+df_models = pd.read_csv("/".join([lib_dir, "model_specifications_lr.csv"]))
 
 # Create models
 for i, row in df_models.iterrows():
@@ -59,19 +59,19 @@ for i, row in df_models.iterrows():
     conf.close()
 
     ## model_params.csv
-    param = open("/".join([bin_dir, "model_params.csv"]), "a")
-    conf.write(",".join([row["model"], row["distortion"], row["expectation"]])+"\n")
-    param.close()
+    #param = open("/".join([bin_dir, "model_params.csv"]), "a")
+    #param.write(",".join([row["model"], row["distortion"], str(row["expectation"])])+"\n")
+    #param.close()
 
 ## Write Slurm
-sl = open("/".join([bin_dir, "submit_models.sh"]), "w")
-sl.write("\n".join(["#!/bin/bash", "#SBATCH --job-name=vh_dcm", 
-                    "#SBATCH --partition=gpu", "#SBATCH --cpus-per-task=1", 
-                    "#SBATCH --mem=32G", "#SBATCH --gpus=1", 
-                    "#SBATCH --time=2-00:00:00", "#SBATCH --array=1-"+str(len(df_models)), 
-                    "module load miniconda Julia/1.9.3-linux-x86_64",
-                    "conda activate generative", 
-                    "./run_models.sh A 0 2")]))
-sl.close()
+#sl = open("/".join([bin_dir, "submit_models.sh"]), "w")
+#sl.write("\n".join(["#!/bin/bash", "#SBATCH --job-name=vh_dcm", 
+#                    "#SBATCH --partition=gpu", "#SBATCH --cpus-per-task=1", 
+#                    "#SBATCH --mem=32G", "#SBATCH --gpus=1", 
+#                    "#SBATCH --time=2-00:00:00", "#SBATCH --array=1-"+str(len(df_models)), 
+#                    "module load miniconda Julia/1.9.3-linux-x86_64",
+#                    "conda activate generative", 
+#                    "./run_models.sh A 0 2")]))
+#sl.close()
 
     

@@ -2,8 +2,11 @@
 agents/
 scenes/
 images/
+clinic/
 bin/old/
 bin/__pycache__/
+bin/analysis/old/
+.ipynb_checkpoints/
 
 # Files
 bin/.Rhistory
@@ -12,4 +15,3 @@ bin/.train_MAPnet.py.swo
 *.out
 *.toml
 *.pt
-*.ipynb
