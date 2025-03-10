@@ -40,6 +40,12 @@ else
     echo "${proj_dir}/lib/${nmodel}/n_train.txt does not exist.";  exit 1
 fi
 
+if [ -f ${proj_dir}/lib/${nmodel}/nlin.txt ]; then
+    readarray -t nlin_vals < ${proj_dir}/lib/${nmodel}/nlin.txt
+else
+    echo "${proj_dir}/lib/${nmodel}/nlin.txt does not exist."; exit 1
+fi
+
 if [ -f ${proj_dir}/lib/${nmodel}/conf.txt ]; then
     readarray -t conf_vals < ${proj_dir}/lib/${nmodel}/conf.txt
 else
@@ -56,6 +62,8 @@ elif [[ `echo ${#n_epoch_vals[@]}` -le ${end_iter} ]]; then
     echo "Too few specified n_epoch values."; exit 1
 elif [[ `echo ${#n_train_vals[@]}` -le ${end_iter} ]]; then
     echo "Too few specified n_train values."; exit 1
+elif [[ `echo ${#nlin_vals[@]}` -le ${end_iter} ]]; then
+    echo "Too few specified nlin values."; exit 1
 elif [[ `echo ${#conf_vals[@]}` -le ${end_iter} ]]; then
     echo "Too few specified conf values."; exit 1
 fi
@@ -70,6 +78,7 @@ for i in $(seq ${start_iter} ${end_iter}); do
     lr=`echo ${lr_vals[$i]}`
     n_epoch=`echo ${n_epoch_vals[$i]}`
     n_train=`echo ${n_train_vals[$i]}`
+    nlin=`echo ${nlin_vals[$i]}`
     conf=`echo ${conf_vals[$i]}`
 
     # Set model if continuing previous model
@@ -79,8 +88,8 @@ for i in $(seq ${start_iter} ${end_iter}); do
         ttype_old=${test_type}
     fi
 
-    # Noisy and clean overlap (i.e., test_type=clean := test_type=noisy + dval=0.05)
-    if [[ ${test_type} == "noisy" ]] && [[ ${dval} == 0.05 ]]; then
+    # Noisy and clean overlap (i.e., test_type=clean := test_type=noisy + dval=0.03)
+    if [[ ${test_type} == "noisy" ]] && [[ ${dval} == 0.03 ]]; then
         ttype=clean
     else
         ttype=${test_type}
@@ -110,7 +119,7 @@ for i in $(seq ${start_iter} ${end_iter}); do
         cp ${proj_dir}/images/${iter}/baseline/labels.csv ${proj_dir}/images/${iter}/${nmodel}_0/labels.csv
     else
         julia forward_graphics_engine/gen_train.jl --iter ${iter} --dataset ${nmodel}_${i} \
-            --n_train ${n_train} --alpha "${alpha}" --count "${count}"
+            --n_train ${n_train} --alpha "${alpha}" --count "${count}" --nlin ${nlin}
         
         ## Create images
         n_imgs=`ls -1 ${proj_dir}/images/${iter}/${nmodel}_${i} | wc -l`
@@ -120,7 +129,7 @@ for i in $(seq ${start_iter} ${end_iter}); do
             export HOME=/gpfs/radev/scratch/yildirim/wcp27/${SLURM_JOB_ID}_${SLURM_ARRAY_TASK_ID}
             for j in $(seq $(( $n_imgs-2  )) $(( $n_train-1  ))); do
                 python utils/gen_images.py --model ${iter}/${nmodel}_${i} \
-                    --row ${j} --test_type clean --dval 0.05 --spp 512 # training images clean
+                    --row ${j} --test_type clean --dval 0.03 --spp 512 # training images clean
             done
             export HOME=/home/wcp27
         else
@@ -146,13 +155,13 @@ for i in $(seq ${start_iter} ${end_iter}); do
     julia forward_graphics_engine/gen_test.jl
     
     ## Create images
-    if [[ ${ttype} == "color" ]] || [[ ${ttype} == "edge" ]] || [[ ${ttype} == "complex" ]] || [[ ${ttype} == "cedge" ]] || [[ ${ttype} = "mixed" ]]; then
-        n_imgs=`ls -1 ${proj_dir}/images/test/clean_0.05 | wc -l`
+    if [[ ${ttype} ==  prim? ]]; then
+        n_imgs=`ls -1 ${proj_dir}/images/test/clean_0.03 | wc -l`
         if [[ $n_imgs -lt 9000 ]]; then
             export HOME=/gpfs/radev/scratch/yildirim/wcp27/${SLURM_JOB_ID}_${SLURM_ARRAY_TASK_ID}
             for j in $(seq $(( $n_imgs  )) 8999); do
-                python utils/gen_images.py --model test/clean_0.05 --row ${j} \
-                    --test_type clean --dval 0.05 --spp 512
+                python utils/gen_images.py --model test/clean_0.03 --row ${j} \
+                    --test_type clean --dval 0.03 --spp 512
             done
             export HOME=/home/wcp27
         else

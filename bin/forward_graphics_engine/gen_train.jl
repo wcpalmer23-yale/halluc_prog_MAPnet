@@ -39,6 +39,10 @@ function parse_commandline()
             help = "count of previous model predictions"
             arg_type = String
             required = true
+        "--nlin", "-l"
+            help = "nonlinear count tranformation"
+            arg_type = Int
+            required = true
     end
 
     return parse_args(s)
@@ -51,7 +55,27 @@ dataset = parsed_args["dataset"]
 n_train = parsed_args["n_train"]
 alpha = parse.(Int, split(chop(parsed_args["alpha"]; head=1, tail=1), ','))
 count = parse.(Int, split(chop(parsed_args["count"]; head=1, tail=1), ','))
-alpha = alpha + count
+nlin = parsed_args["nlin"]
+
+# SoftMax Beta
+beta = 450
+
+# Updating alpha
+if (nlin != 0)
+    # Exponential transformation
+    count_exp = exp.(count/beta)
+
+    # Set to original count
+    count_nlin = round.(Int, sum(count).*(count_exp./sum(count_exp)))
+
+    # Adjust for rounding error
+    if (sum(count) != sum(count_nlin))
+        count_nlin[argmax(count_nlin)] += sum(count) - sum(count_nlin)
+    end
+else
+    count_nlin = count
+end
+alpha = alpha + count_nlin
 
 # Set variables
 @gen function room()
@@ -122,12 +146,14 @@ if isfile(proj_dir*"/images/"*iter*"/"*dataset*"/labels.csv")
     println("Iter: ", iter)
     println("Dataset: ", dataset)
     println("Alpha: ", alpha)
+    println("NonLin:", nlin)
 else
     # Create data
     println("CREATING TRAINING DATA")
     println("Iter: ", iter)
     println("Dataset: ", dataset)
     println("Alpha: ", alpha)
+    println("NonLin:", nlin)
     mkpath(proj_dir*"/images/"*iter*"/"*dataset)
     data_maker(n_train)
 

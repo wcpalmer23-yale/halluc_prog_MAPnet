@@ -16,6 +16,7 @@ from inv_util import Classifier, Confidence
 
 # Arguments
 parser = argparse.ArgumentParser()
+parser.add_argument('-i', '--iter', type=str, required=True, help="iteration name")
 parser.add_argument('-d', '--dataset', type=str, required=True, help="dataset name")
 parser.add_argument('-m', '--model', type=str, required=True, help="name of pretrained model or 'new' if new model")
 parser.add_argument('-l', '--lr', type=float, required=True, help="model learning rate")
@@ -27,6 +28,7 @@ args = parser.parse_args()
 # Extract arguments
 nscenes = args.n_scenes
 nagents = args.n_agents
+iteration = args.iter
 dataset = args.dataset
 nmodel = args.model
 
@@ -34,7 +36,7 @@ nmodel = args.model
 proj_dir = "/home/wcp27/project/halluc_prog_MAPnet"
 lib_dir = "/".join([proj_dir, "lib"])
 img_dir = "/".join([proj_dir, "images"])
-data_dir = "/".join([img_dir, dataset])
+data_dir = "/".join([img_dir, iteration, dataset])
 train_dir = "/".join([data_dir, "train"])
 val_dir = "/".join([data_dir, "valid"])
 
@@ -89,7 +91,9 @@ else:
     
     # PyTorch Setup
     # set the device we will be using to train the model
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    #device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cuda")
+    print(device)
     
     # Build Model
     ## AlexNet until FC1
@@ -98,9 +102,9 @@ else:
     ## Use pretrained model if not new
     if nmodel != 'new':
         print("Loading Model")
-        Classifier = torch.jit.load('/'.join([img_dir, nmodel, nmodel+'_classif.pt']))
+        Classifier = torch.jit.load('/'.join([img_dir, iteration, nmodel, nmodel+'_classif.pt']))
         class_out = Classifier.to(device)
-        Confidence = torch.jit.load('/'.join([img_dir, nmodel, nmodel+'_conf.pt']))
+        Confidence = torch.jit.load('/'.join([img_dir, iteration, nmodel, nmodel+'_conf.pt']))
         conf_out = Confidence.to(device)
     else:
         print("Creating Model")

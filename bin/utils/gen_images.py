@@ -26,6 +26,7 @@ row = args.row
 test_type = args.test_type
 dval = args.dval
 spp = args.spp
+dval_clean = 0.03
 
 # Directories
 proj_dir = "/home/wcp27/project/halluc_prog_MAPnet"
@@ -65,8 +66,8 @@ else:
     ## Create image
     ### Room scaling
     if scene == "bathroom":
-        x_scale = x*(6+6)-6
-        z_scale = z*(8+8)-8
+        x_scale = x*(5.5+5.5)-5.5
+        z_scale = z*(7.5+7.5)-7.5
         y_scale = 0
     elif scene == "bedroom":
         x_scale = x*(0.5+0.5)-0.5
@@ -77,24 +78,24 @@ else:
         z_scale = z*(1.0+1.0)-1.0
         y_scale = 0
     elif scene == "grey-white-room":
-        x_scale = x*(0.55+0.55)-0.55
-        z_scale = z*(0.7+0.7)-0.7
+        x_scale = x*(0.45+0.45)-0.45
+        z_scale = z*(0.75+0.75)-0.75
         y_scale = 0
     elif scene == "kitchen":
         x_scale = x*(0.8+0.8)-0.8
-        z_scale = z*(0.5+0.5)-0.5
+        z_scale = z*(0.35+0.35)-0.35
         y_scale = 0
     elif scene == "living-room":
         x_scale = x*(0.7+0.7)-0.7
         z_scale = z*(0.6+0.6)-0.6
         y_scale = 0
     elif scene == "staircase":
-        x_scale = x*(0.4+0.4)-0.4
-        z_scale = z*(0.7+0.7)-0.7
+        x_scale = x*(0.5+0.5)-0.5
+        z_scale = z*(0.35+0.35)-0.35
         y_scale = 0
     elif scene == "study":
         x_scale = x*(1.5+1.5)-1.5
-        z_scale = z*(3.0+3.0)-3.0
+        z_scale = z*(2.5+2.5)-2.5
         y_scale = 0
     elif scene == "tea-room":
         x_scale = x*(0.6+0.6)-0.6
@@ -108,6 +109,7 @@ else:
     ### Apply noise
     if test_type == "blurred":
         mu = blurr_float_img(mu, dval)
+        mu = mu + np.random.normal(0, dval_clean, mu.shape)
     else:
         mu = mu + np.random.normal(0, dval, mu.shape)
 

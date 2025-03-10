@@ -11,7 +11,9 @@ bin/analysis/old/
 # Files
 bin/.Rhistory
 bin/.train_MAPnet.py.swo
+bin/*.ipynb
 *.csv
 *.out
 *.toml
 *.pt
+*.tar.gz

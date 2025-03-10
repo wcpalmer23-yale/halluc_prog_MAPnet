@@ -92,6 +92,7 @@ else:
     # PyTorch Setup
     # set the device we will be using to train the model
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print(device)
     
     # Build Model
     ## AlexNet until FC1

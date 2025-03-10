@@ -27,7 +27,7 @@ if [ "${stage}" = "forward_graphics_engine" ]; then
     echo "FORWARD GRAPHICS ENGINE"
     ## Create dataset
     julia forward_graphics_engine/gen_train.jl --iter ${iter} --dataset baseline \
-        --n_train ${n_train} --alpha "${alpha}" --count "${count}"
+        --n_train ${n_train} --alpha "${alpha}" --count "${count}" --nlin 0
         
     ## Create images
     n_imgs=`ls -1 ${proj_dir}/images/${iter}/baseline | wc -l`
@@ -37,7 +37,7 @@ if [ "${stage}" = "forward_graphics_engine" ]; then
         export HOME=/gpfs/radev/scratch/yildirim/wcp27/${SLURM_JOB_ID}
         for j in $(seq $(( $n_imgs-2  )) $(( $n_train-1  ))); do
             python utils/gen_images.py --model ${iter}/baseline \
-                --row ${j} --test_type clean --dval 0.05 --spp 512 # training images clean
+                --row ${j} --test_type clean --dval 0.03 --spp 512 # training images clean
         done
         export HOME=/home/wcp27
     else

@@ -201,3 +201,9 @@ def calc_prior_corr(model, test_type, data_dir, prec):
     prior_corr = round(prior_corr, prec)
 
     return(prior_corr)
+
+def calc_train_dist(data_dir, prec):
+    
+    
+    # Import csv
+    df_train = pd.read_csv("/".join([data_dir, "train/label.csv"]))
